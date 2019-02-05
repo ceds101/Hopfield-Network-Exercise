@@ -38,7 +38,7 @@ class Hopfield:
                 prev_state = curr_state.copy()
                 node_weight_vector = self.weight_matrix[:,curr_node_index]
                 curr_state[curr_node_index] = self.__calculate_node_value(node_weight_vector, curr_state) #the node is the jth column of the weight matrix
-                if prev_state != curr_state:
+                if np.array_equal(prev_state, curr_state) == False:
                     node_changed = True
         
         return curr_state
