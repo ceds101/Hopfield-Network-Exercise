@@ -40,6 +40,7 @@ class Hopfield:
                 curr_state[curr_node_index] = self.__calculate_node_value(node_weight_vector, curr_state) #the node is the jth column of the weight matrix
                 if np.array_equal(prev_state, curr_state) == False:
                     node_changed = True
+                    print('Node ',curr_node_index, 'changed')
         
         return curr_state
                 
