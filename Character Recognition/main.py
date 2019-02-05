@@ -3,8 +3,7 @@ import numpy as np
 
 def main():
     char_recognizer = backend.Hopfield(25)
-    a_file = np.genfromtxt('a_file.csv', delimiter=',', encoding="utf8")
-    print(a_file)
+    a_file = np.genfromtxt('a_file.csv', delimiter=',')
     b_file = np.genfromtxt('b_file.csv', delimiter=',')
     c_file = np.genfromtxt('c_file.csv', delimiter=',')
 
