@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 class Hopfield:
     # Hopfield network attributes
@@ -22,10 +23,41 @@ class Hopfield:
                     #print(i,' ',j)
                     self.weight_matrix[i][j] += (2*char_vector[i] - 1)*(2*char_vector[j] - 1) # storage prescription formula
                     self.weight_matrix[j][i] = self.weight_matrix[i][j] #Copy to lower triangle
-                    
+
     # Recognize a character
     def recognize_char(self, input_vector):
-        pass
+        node_changed = True #Assume a node has changed
+        curr_state = input_vector
 
-    def set_weight_matrix(self, new_weight_matrix):
-        pass
+        node_index_order = list(range(0, self.network_size))
+        random.shuffle(node_index_order)
+
+        while node_changed:
+            node_changed = False
+            for curr_node_index in node_index_order:
+                prev_state = curr_state.copy()
+                node_weight_vector = self.weight_matrix[:,curr_node_index]
+                curr_state[curr_node_index] = self.__calculate_node_value(node_weight_vector, curr_state) #the node is the jth column of the weight matrix
+                if prev_state != curr_state:
+                    node_changed = True
+        
+        return curr_state
+                
+        
+
+           
+                
+        
+
+
+
+
+
+    # PRIVATE FUNCTIONS
+    def __calculate_node_value(self, node_weight_vector, curr_state):
+        node_value = np.dot(node_weight_vector, curr_state)
+        if node_value >= 0:
+            output_node_value = 1
+        else:
+            output_node_value = 0
+        return output_node_value
