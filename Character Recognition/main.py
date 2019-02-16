@@ -5,13 +5,15 @@ import math
 def main():
     network_size = 25
     char_recognizer = backend.Hopfield(network_size)
-    a_file = np.genfromtxt('patterns/a_file.csv', delimiter=',').flatten()
-    b_file = np.genfromtxt('patterns/b_file.csv', delimiter=',').flatten()
-    c_file = np.genfromtxt('patterns/c_file.csv', delimiter=',').flatten()
-    d_file = np.genfromtxt('patterns/d_file.csv', delimiter=',').flatten()
-    #e_file = np.genfromtxt('patterns/e_file.csv', delimiter=',').flatten()
-    
-    char_set = np.array([a_file, b_file, c_file, d_file])
+    char_set = np.empty(shape=(0, 25))
+
+    for i in range(3):
+        char_filename = "patterns/pattern_" + chr(i + 65) + ".csv"
+        char_file = np.genfromtxt(char_filename, delimiter=',').flatten()
+        char_set = np.append(char_set, char_file.reshape((-1, 25)), axis=0)
+
+    print(char_set)
+
     char_recognizer.train_network(char_set) #Train hopfield network on the given set of patterns
 
     print(char_recognizer.weight_matrix)
